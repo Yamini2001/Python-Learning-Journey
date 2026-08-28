@@ -1,8 +1,8 @@
 ## Create a program accepts a string from the user and converts it into title case. 
-user_input = input("Enter a string: ")
+user = input("Enter a string: ")
 
 # Step 1: Split the sentence into individual words
-words = user_input.split()
+words = user.split()
 
 title_cased_words = []
 
