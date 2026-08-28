@@ -42,7 +42,10 @@ Python-Learning-Journey/
 │   └── ...
 │
 ├── Day_02/
-│   └── ...
+│   |── Assignment.md
+|   ├── Exercise_01_SentenceAnalysis.py
+|   |── Exercise_02_ReverseUppercaseString.py
+
 │
 └── README.md
 ```
@@ -57,10 +60,10 @@ I want to understand **how to think like a programmer**, break a problem into sm
 
 ## 🚀 Progress
 
-| Day    | Topics                                  | Status      |
-| ------ | --------------------------------------- | ----------- |
+| Day    | Topics                                  | Status        |
+| ------ | --------------------------------------- | -----------   |
 | Day 01 | Python Introduction, Conditions & Loops | ✅ Completed |
-| Day 02 | Coming Soon                             | ⏳           |
+| Day 02 | Sequence Types — Strings & Tuples       | ✅ Completed |
 | Day 03 | Coming Soon                             | ⏳           |
 | Day 04 | Coming Soon                             | ⏳           |
 
