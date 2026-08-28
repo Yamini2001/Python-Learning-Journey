@@ -6,7 +6,7 @@ consonants = 0
 
 # Convert string to lowercase to make it case-insensitive
 for char in user.lower():
-    if char.isalpha():  # Fixed typo: isalpha()
+    if char.isalpha():  
         if char in vowels:
             vowels[char] += 1
         else:
