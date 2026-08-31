@@ -65,7 +65,7 @@ I want to understand **how to think like a programmer**, break a problem into sm
 | ------ | --------------------------------------- | -----------   |
 | Day 01 | Python Introduction, Conditions & Loops | ✅ Completed |
 | Day 02 | Sequence Types — Strings & Tuples       | ✅ Completed |
-| Day 03 | Coming Soon                             | ⏳           |
+| Day 03 | Mutable Sequences — Working with Lists  | Progress      |
 | Day 04 | Coming Soon                             | ⏳           |
 
 > I will keep updating this repository as I learn and practice.
