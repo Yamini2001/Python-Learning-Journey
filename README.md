@@ -45,6 +45,7 @@ Python-Learning-Journey/
 │   |── Assignment.md
 |   ├── Exercise_01_SentenceAnalysis.py
 |   |── Exercise_02_ReverseUppercaseString.py
+|   |── Excerise_-3_EmailDomainExtractor.py
 
 │
 └── README.md
