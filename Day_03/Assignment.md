@@ -83,4 +83,89 @@ Scenario: A secret agent wants to send an encrypted message. The encryption rule
 
 ---
 
+## Exercise 6: Grading on a Curve
+Scenario: A professor wants to adjust exam grades. Prompt the user to enter a list of space-separated test scores. Convert them to a list of integers. Using a single list comprehension with conditionals, apply the following curve rules:
 
+If a score is below 50, add 10 points.
+If a score is 50 or higher, add 5 points.
+The maximum possible score is capped at 100 (e.g., a score of 98 becomes 100, not 103). Print the original and the curved grades.
+**Sample Input**: "45 88 30 98 50"
+**Sample Output**:
+Original: [45, 88, 30, 98, 50]
+Curved: [55, 93, 40, 100, 55]
+
+---
+
+## Exercise 7: Treasure Map Coordinate Filter
+Scenario: You have a list of coordinate pairs representing suspected treasure locations on a map: coords = [[12, 5], [-3, 14], [8, -2], [15, 9], [-5, -6]]. However, the treasure can only exist in the first quadrant of the map (where both the X coordinate and Y coordinate are strictly greater than zero (i.e., x > 0 and y > 0)). Write a program that uses a list comprehension to filter the list and print only the valid coordinates.
+
+**Hardcoded Input**: coords = [[12, 5], [-3, 14], [8, -2], [15, 9], [-5, -6]]
+**Sample Output**: [[12, 5], [15, 9]]
+
+## Exercise 8: De-duplicating Shopping Cart
+Scenario: An online shopping cart has duplicate items due to double-clicks: ["apple", "banana", "apple", "orange", "banana", "banana"]. Write a program that processes the list and removes all duplicate items, but keeps the first occurrence of each item in its original order. Print the cleaned cart.
+
+**Hardcoded Input**: cart = ["apple", "banana", "apple", "orange", "banana", "banana"]
+**Sample Output**: ['apple', 'banana', 'orange']
+
+
+## Part C: Difficult Complexity (2 Exercises)
+
+## Exercise 9: The Josephus Elimination Game
+Scenario: A group of 
+N
+ soldiers (numbered 1 to 
+N
+) stand in a circle. Starting from the first soldier, every 
+K
+-th soldier is eliminated from the circle. The count continues with the next remaining soldier, moving clockwise. This process repeats until only one soldier remains. Write a program that prompts the user to enter 
+N
+ (number of soldiers) and 
+K
+ (elimination interval). Simulate the game using a list and print the order of eliminations and the final survivor.
+
+**Sample Input**: N = 5, K = 2
+**Sample Output**:
+
+```text 
+
+Soldier circle initialized: [1, 2, 3, 4, 5]
+Eliminated soldier: 2 (Remaining: [1, 3, 4, 5])
+Eliminated soldier: 4 (Remaining: [1, 3, 5])
+Eliminated soldier: 1 (Remaining: [3, 5])
+Eliminated soldier: 5 (Remaining: [3])
+The sole survivor is: 3
+
+```
+---
+
+## Exercise 10: Snake Game Board Renderer
+Scenario: Render a simple 2D text game board. Write a program that performs the following steps in sequence:
+
+Creates a 
+5
+×
+5
+ grid filled with dots "." represented as a nested list.
+Places a food item "F" at grid position [2, 3].
+Prompts the user to enter coordinate inputs: a row and a col (integers between 0 and 4) for the snake's head.
+Places the snake's head "S" at the user-supplied coordinate [row, col], overwriting the character at that position.
+If the user-supplied coordinates are exactly [2, 3], print the message "Yum! The snake ate the food!" (the snake "S" will occupy index [2, 3] on the printed board, overwriting the "F").
+Prints the grid neatly line-by-line (each row's elements separated by spaces).
+Sample Input: (User inputs Row 0 and Column 3)
+Sample Output:
+. . . S .
+. . . . .
+. . . F .
+. . . . .
+. . . . .
+**Sample Input**: (User inputs Row 2 and Column 3)
+**Sample Output**:
+. . . . .
+. . . . .
+. . . S .
+. . . . .
+. . . . .
+Yum! The snake ate the food!
+
+---
