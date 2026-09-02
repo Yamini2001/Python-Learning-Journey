@@ -65,7 +65,7 @@ I want to understand **how to think like a programmer**, break a problem into sm
 | ------ | --------------------------------------- | -----------   |
 | Day 01 | Python Introduction, Conditions & Loops | ✅ Completed |
 | Day 02 | Sequence Types — Strings & Tuples       | ✅ Completed |
-| Day 03 | Mutable Sequences — Working with Lists  | Progress      |
+| Day 03 | Mutable Sequences — Working with Lists  | ✅ Completed |
 | Day 04 | Coming Soon                             | ⏳           |
 
 > I will keep updating this repository as I learn and practice.
@@ -76,7 +76,7 @@ For each exercise, I try to follow this process:
 
 **Understand the problem → Build the logic → Write the code → Test it → Improve it**
 
-This helps me focus on understanding the solution instead of simply memorizing code.
+This helps me focus on understanding the solution instead of simply memorising code.
 
 ## 🌱 Learning in Public
 
