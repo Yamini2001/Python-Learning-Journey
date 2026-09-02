@@ -9,7 +9,7 @@ contacts = {}
 
 def register_contact(phonebook, name, phone_input):
     # Validate the phone number
-    cleaned_name = name.replace(" ", "")
+    # cleaned_name = name.replace(" ", "")
     if not name or not isinstance(name, str) or not name.strip() or not name.replace(" ", "").isalpha():
         raise ValueError("Contact name must be a non-empty alphabetic string.")
     
