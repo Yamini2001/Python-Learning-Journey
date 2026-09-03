@@ -128,5 +128,151 @@ Returned Dictionary:
 
 ```
 
+## Assignment 4: Atomic E-Commerce Order Processor
+Scenario
+You are building an ordering subsystem for an online store. Orders containing multiple products must be processed atomically: either the entire order completes successfully, or the entire transaction fails. If one item in the order is out of stock or is unrecognized, no stock should be deducted for any other item (rollback).
+
+## Problem Description
+Define two custom exceptions:
+ProductNotFoundError (raised when a product ID is not present in the catalog).
+OutOfStockError (raised when the customer's ordered quantity exceeds the available stock).
+Write a function process_order(catalog, order):
+catalog is a dictionary containing product database records. Format:
+catalog = {
+    "P01": {"price": 100.0, "stock": 5},
+    "P02": {"price": 50.0, "stock": 2}
+}
+order is a dictionary containing product IDs (keys) and quantities ordered (values). Format: {"P01": 2, "P02": 1}.
+Validation Phase: Before modifying any inventory levels:
+Check if all ordered keys exist in the catalog. If a product ID does not exist, raise ProductNotFoundError with message: "Product '<product_id>' not found in store catalog."
+Check if the catalog contains sufficient stock for each item ordered. If the ordered quantity exceeds available stock, raise OutOfStockError with message: "Product '<product_id>' is out of stock. Requested: <requested_qty>, Available: <available_stock>."
+Execution Phase: If (and only if) all products pass validation:
+Deduct the ordered quantities from the stock numbers in the catalog dictionary.
+Calculate and return the total cost of the order (float).
+If an exception was raised during validation, the catalog must remain completely unchanged.
+Example Walkthrough
+catalog = {
+    "P01": {"price": 10.0, "stock": 5},
+    "P02": {"price": 20.0, "stock": 10}
+}
+
+# 1. Successful Order
+total = process_order(catalog, {"P01": 2, "P02": 1})
+# Returns: 40.0
+# Catalog stock changes to: P01 stock = 3, P02 stock = 9
+
+# 2. Failed Order (Triggers Rollback)
+# Current Catalog: {"P01": {"price": 10.0, "stock": 3}, "P02": {"price": 20.0, "stock": 9}}
+try:
+    total = process_order(catalog, {"P01": 2, "P02": 15})
+except OutOfStockError as e:
+    print(e) # Output: Product 'P02' is out of stock. Requested: 15, Available: 9.
+
+# Verify Catalog Stock: P01 must remain at 3 (NOT decreased to 1).
+print(catalog["P01"]["stock"]) # Output: 3
+
+## Difficult Assignments
+
+## Assignment 5: Deep JSON/Configuration Key Traverser
+Scenario
+Configuration files loaded from JSON databases consist of nested dictionary hierarchies. Checking key existence at every level using nested conditions (if key in dictionary) leads to complex and verbose code. You need to write a clean traverser utility that navigates nested dictionaries using exceptions.
+
+Problem Description
+Write a function traverse_nested_config(config_dict, path_str, default=None):
+
+config_dict is a nested dictionary configuration tree.
+path_str is a string specifying the configuration path using dot notation (e.g., "server.database.port").
+The function should split the path_str on . characters and traverse down config_dict.
+Implementation Constraint: You must attempt to traverse keys directly. Do not use key-existence checks (like if key in dict) or class-checks (like if isinstance(sub_dict, dict)). Instead, handle the lookup path directly inside a try block and catch the following exceptions to return the default value:
+Catch KeyError if any key in the path does not exist.
+Catch TypeError or AttributeError if you try to index a primitive, non-dictionary value (e.g., trying to access a key like "port" on a configuration value that resolved to a string or number).
+If path_str is empty or config_dict is not a valid dictionary, return the default value.
+Test Data & Test Cases
+config = {
+    "server": {
+        "host": "127.0.0.1",
+        "port": 8080,
+        "ssl": {
+            "enabled": True,
+            "cert_path": "/etc/ssl/certs"
+        }
+    },
+    "database": "postgresql://localhost:5432"
+}
+
+# Test Case 1: Valid Path
+print(traverse_nested_config(config, "server.ssl.cert_path"))
+# Output: /etc/ssl/certs
+
+# Test Case 2: Missing Key (Triggers KeyError)
+print(traverse_nested_config(config, "server.database.username", "guest"))
+# Output: guest
+
+# Test Case 3: Indexing Non-Dictionary value (Triggers TypeError)
+# Here config["database"] is a string, which cannot be indexed with "host"
+print(traverse_nested_config(config, "database.host", "localhost"))
+# Output: localhost
+
+## Assignment 6: Atomic Transaction processing with Log Rollback
+
+## Scenario
+A bank updates user balances in a database dictionary based on transaction files. To ensure accounting consistency, if any single transaction in a batch contains an error (such as a negative transfer amount, an unrecognized account number, or an overdraft), the entire batch must fail, all accounts must be restored to their initial states, and a rollback action must be logged to a text file.
+
+Problem Description
+Define three custom exception classes inheriting from Exception:
+AccountNotFoundError (raised when an account ID is missing from the registry).
+OverdraftError (raised when a withdrawal amount exceeds the account balance).
+InvalidTransactionError (raised when the transaction type is unrecognized or if transaction amounts are non-positive).
+Write a function process_transaction_batch(accounts, batch_list, log_path):
+accounts is a dictionary where keys are account numbers (strings) and values are balances (floats), e.g., {"ACC01": 500.0, "ACC02": 200.0}.
+batch_list is a list of dictionaries representing transactions, e.g.:
+[
+    {"acc": "ACC01", "type": "deposit", "amt": 150.0},
+    {"acc": "ACC02", "type": "withdraw", "amt": 50.0}
+]
+log_path is a string referencing the path of the transaction log file.
+Atomicity Requirements:
+Create a deep copy of the accounts dictionary before starting any transaction modifications to act as a restore point (backup).
+Iterate through batch_list and apply the changes to accounts:
+If the transaction "acc" does not exist in accounts, raise AccountNotFoundError with message: "Account '<acc>' not found."
+If transaction "type" is not "deposit" or "withdraw", raise InvalidTransactionError with message: "Invalid transaction type '<type>'."
+If transaction "amt" is less than or equal to 0, raise InvalidTransactionError with message: "Transaction amount must be positive."
+If transaction "type" is "withdraw" and the account balance is less than "amt", raise OverdraftError with message: "Insufficient funds. Account <acc> has balance <bal>, requested <amt>."
+Exception Handling & Rollback:
+If any exception is raised during the processing of the list, catch the exception:
+Restore the accounts dictionary to the exact state saved in your backup.
+Open the file at log_path (create it if it doesn't exist, append to it if it does) and write the following entry: [ROLLBACK] Batch aborted: <Exception Class Name> - <Exception Message>\n
+Re-raise the caught exception so that the calling program knows the transaction batch failed.
+If all transactions in the batch are executed successfully:
+Open the file at log_path and write: [SUCCESS] Batch completed. <number_of_transactions> transaction(s) processed.\n
+Return the updated accounts dictionary.
+Constraint: Ensure all file operations are safely cleaned up. Use context managers (with open(...)) or try...finally to write to the log file.
+Example Walkthrough
+accounts = {"ACC01": 100.0, "ACC02": 50.0}
+log_file = "transactions.log"
+
+# Batch 1: Valid transactions
+batch_1 = [
+    {"acc": "ACC01", "type": "withdraw", "amt": 30.0},
+    {"acc": "ACC02", "type": "deposit", "amt": 20.0}
+]
+accounts = process_transaction_batch(accounts, batch_1, log_file)
+# Result: accounts changes to {"ACC01": 70.0, "ACC02": 70.0}
+# transactions.log writes: "[SUCCESS] Batch completed. 2 transaction(s) processed."
+
+# Batch 2: Invalid transaction (triggers rollback)
+batch_2 = [
+    {"acc": "ACC01", "type": "deposit", "amt": 50.0},
+    {"acc": "ACC02", "type": "withdraw", "amt": 200.0} # Overdraft!
+]
+try:
+    accounts = process_transaction_batch(accounts, batch_2, log_file)
+except OverdraftError as e:
+    print(f"Caught: {e}")
+
+# Verify Rollback: ACC01 must remain 70.0, NOT updated to 120.0.
+print(accounts) # Output: {"ACC01": 70.0, "ACC02": 70.0}
+# transactions.log writes: "[ROLLBACK] Batch aborted: OverdraftError - Insufficient funds. Account ACC02 has balance 70.0, requested 200.0."
+
 
 
