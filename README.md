@@ -67,7 +67,8 @@ I want to understand **how to think like a programmer**, break a problem into sm
 | Day 02 | Sequence Types — Strings & Tuples       | ✅ Completed |
 | Day 03 | Mutable Sequences — Working with Lists  | ✅ Completed |
 | Day 04 | Dictionaries & Exception Handling       | ✅ Completed |
-| Day 05 | Coming Soon                             | Not Started   |
+| Day 05 | Functions, Scopes & RegEx               | ✅ Completed |
+| Day 06 | Coming Soon                             | Not yet      |
 
 > I will keep updating this repository as I learn and practice.
 
