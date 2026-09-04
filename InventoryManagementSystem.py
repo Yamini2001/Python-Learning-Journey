@@ -262,8 +262,8 @@ def delete_product():
 
 
 # ---------------- MAIN MENU ----------------
-
-while True:
+def main():
+ while True:
 
     print("\n==========================================")
     print("   PRODUCT INVENTORY MANAGEMENT SYSTEM")
