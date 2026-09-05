@@ -69,6 +69,7 @@ I want to understand **how to think like a programmer**, break a problem into sm
 | Day 04 | Dictionaries & Exception Handling       | ✅ Completed |
 | Day 05 | Functions, Scopes & RegEx               | ✅ Completed |
 | Day 06 | Coming Soon                             | Not yet      |
+| Day 07 | Python Basics Project                   | Completed    |
 
 > I will keep updating this repository as I learn and practice.
 
